@@ -82,5 +82,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="${pageContext.request.contextPath}/js/services.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
     </body>
 </html>

@@ -4,24 +4,25 @@ statusColumns.forEach(column => {
     column.addEventListener('drop', handleDrop);
 });
 
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('dragstart', handleDragStart);
-    card.addEventListener('dragend', handleDragEnd);
-});
-
 let draggedCard = null;
 
+function attachDragEventsToProjectCards() {
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragend', handleDragEnd);
+    });
+}
+
 function handleDragStart(event) {
-    draggedCard = this.cloneNode(true);
-    console.log("Drag iniciado:", this.id);
-    setTimeout(() => this.classList.add('invisible'), 0);
+    draggedCard = this;
+    console.log("Drag iniciado:", draggedCard.id);
+    setTimeout(() => draggedCard.classList.add('invisible'), 0);
 }
 
 function handleDragEnd() {
-    console.log("Drag terminado:", this.id);
-    this.classList.remove('invisible');
-    draggedCard = null;
+    console.log("Drag terminado:", draggedCard.id);
+    draggedCard.classList.remove('invisible');
 }
 
 function allowDrop(event) {
@@ -44,7 +45,14 @@ function handleDrop(event) {
             updateProjectStatus(projectId, newStatus)
             .then(() => {
                 console.log(`Projeto ${projectId} atualizado para o status ${newStatus}`);
-                this.appendChild(draggedCard);
+
+                const validDraggedCard = document.getElementById(draggedCard.id);
+                if (validDraggedCard) {
+                    this.appendChild(validDraggedCard);
+                } else {
+                    console.error("O cartão arrastado não existe mais no DOM.");
+                }
+
                 draggedCard = null;
             })
             .catch(error => {
@@ -79,7 +87,3 @@ function getStatusFromColumnId(columnId) {
             return null;
     }
 }
-
-flatpickr(".input-data", {
-    dateFormat: "d/m/Y"
-});
