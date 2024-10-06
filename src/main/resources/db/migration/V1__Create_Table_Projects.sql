@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS projects (
   end_date TIMESTAMP NOT NULL,
   budget NUMERIC(12,2) NOT NULL,
   description VARCHAR(500) NOT NULL,
-  status BIGINT DEFAULT NULL
+  status VARCHAR(50) DEFAULT NULL
 );
