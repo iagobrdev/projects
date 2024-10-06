@@ -20,7 +20,7 @@
 
         <div class="row mb-4">
             <div class="col-md-12">
-                <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome, gerente, status...">
+                <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome, gerente, Data de Início ou Previsão de Término ou Risco...">
             </div>
         </div>
 
@@ -75,7 +75,8 @@
         </div>
     </div>
 
-    <jsp:include page="modalCadastro.jsp" />
+    <jsp:include page="registerModal.jsp" />
+    <jsp:include page="editingModal.jsp" />
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
