@@ -15,6 +15,12 @@
     cursor: grab;
 }
 
+.project-card.dragging {
+    opacity: 0.5;
+    position: absolute;
+    z-index: 1000;
+}
+
 .project-card h6 {
     margin: 0;
     font-size: 16px;

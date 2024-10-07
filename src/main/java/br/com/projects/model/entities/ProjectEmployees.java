@@ -1,10 +1,12 @@
 package br.com.projects.model.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +19,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "employees")
-public class Employee implements Serializable {
+@Table(name = "project_employees")
+public class ProjectEmployees implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -27,9 +29,11 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project", nullable = false)
+    private Project project;
 
-    @Column(nullable = false, length = 255)
-    private String assignment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee", nullable = false)
+    private Employee employee;
 }

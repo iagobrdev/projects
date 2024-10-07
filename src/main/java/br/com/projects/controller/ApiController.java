@@ -1,7 +1,10 @@
 package br.com.projects.controller;
 
+import br.com.projects.model.dto.EmployeeRequestDto;
+import br.com.projects.model.dto.EmployeeResponseDto;
 import br.com.projects.model.dto.ProjectRequestDto;
 import br.com.projects.model.dto.ProjectResponseDto;
+import br.com.projects.service.EmployeeService;
 import br.com.projects.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,45 +24,57 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/projects")
+@RequestMapping("/api/v1")
 public class ApiController {
 
-    private final ProjectService service;
+    private final ProjectService projectService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public ApiController(ProjectService service) {
-        this.service = service;
+    public ApiController(ProjectService projectService, EmployeeService employeeService) {
+        this.projectService = projectService;
+        this.employeeService = employeeService;
     }
 
-    @PostMapping
-    public ResponseEntity<ProjectResponseDto> createNewProject(@RequestBody ProjectRequestDto dto) {
-        return ResponseEntity.ok(service.createProject(dto));
+    @PostMapping("/projects")
+    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequest) {
+        return ResponseEntity.ok(projectService.createProject(projectRequest));
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProjectResponseDto>> findAll(@PageableDefault(size = 100) Pageable pagination) {
-        return ResponseEntity.ok(service.findAll(pagination).getContent());
+    @PostMapping("/employees")
+    public ResponseEntity<EmployeeResponseDto> createEmployee(@RequestBody EmployeeRequestDto employeeRequest) {
+        return ResponseEntity.ok(employeeService.createEmployee(employeeRequest));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    @GetMapping("/projects")
+    public ResponseEntity<List<ProjectResponseDto>> getAllProjects(@PageableDefault(size = 100) Pageable pageable) {
+        return ResponseEntity.ok(projectService.findAll(pageable).getContent());
     }
 
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<String> updateProjectStatus(@PathVariable Long id, @RequestBody Map<String, String> update) {
-        service.updateStatus(id, update.get("status"));
+    @GetMapping("/employees")
+    public ResponseEntity<List<EmployeeResponseDto>> getAllEmployees(@PageableDefault(size = 100) Pageable pageable) {
+        return ResponseEntity.ok(employeeService.findAll(pageable).getContent());
+    }
+
+    @GetMapping("/projects/{id}")
+    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.findById(id));
+    }
+
+    @PatchMapping("/projects/{id}/status")
+    public ResponseEntity<String> updateProjectStatus(@PathVariable Long id, @RequestBody Map<String, String> statusUpdate) {
+        projectService.updateStatus(id, statusUpdate.get("status"));
         return ResponseEntity.ok("Status atualizado com sucesso");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto dto) {
-        return ResponseEntity.ok(service.updateProject(id, dto));
+    @PutMapping("/projects/{id}")
+    public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto projectRequest) {
+        return ResponseEntity.ok(projectService.updateProject(id, projectRequest));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> removeById(@PathVariable Long id) {
-        service.deleteById(id);
-        return ResponseEntity.ok("Projeto removido comsucesso!");
+    @DeleteMapping("/projects/{id}")
+    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
+        projectService.deleteById(id);
+        return ResponseEntity.ok("Projeto removido com sucesso!");
     }
 }

@@ -1,7 +1,5 @@
 CREATE TABLE IF NOT EXISTS employees (
   id BIGSERIAL PRIMARY KEY,
-  project BIGINT NOT NULL,
   name VARCHAR(255) NOT NULL,
-  assignment VARCHAR(255) NOT NULL,
-  FOREIGN KEY (project) REFERENCES projects(id)
+  assignment VARCHAR(255) NOT NULL
 );

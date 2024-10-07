@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +27,5 @@ public class ProjectResponseDto implements Serializable {
     private BigDecimal budget;
     private String description;
     private String status;
+    private List<EmployeesToProject> employees;
 }

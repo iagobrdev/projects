@@ -87,6 +87,23 @@
                             </div>
                         </div>
                     </div>
+
+                   <div class="row">
+                       <div class="col-md-12">
+                           <h5>Adicionar Membros ao Projeto</h5>
+                           <table class="table table-bordered" id="membersTable">
+                               <thead>
+                                   <tr>
+                                       <th>Selecionar</th>
+                                       <th>Nome</th>
+                                       <th>Função no Projeto</th>
+                                   </tr>
+                               </thead>
+                               <tbody id="membersTableBody"></tbody>
+                           </table>
+                       </div>
+                   </div>
+
                     <button type="submit" class="btn btn-primary">Salvar Projeto</button>
                 </form>
             </div>
