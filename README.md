@@ -49,3 +49,9 @@ Em seguida, crie um banco local PostgreSQL com um schema chamado de `public`, qu
 ```bash
 mvn clean install
 ```
+
+Para executar o .jar fora da ide, rode o comando (Se for o caso, altere os dados das environments):
+
+```bash
+java -jar target/nome_do_jar.jar --DB_URL=jdbc:postgresql://localhost:5432/projects --DB_USERNAME=postgres --DB_PASSWORD=postgres
+```
