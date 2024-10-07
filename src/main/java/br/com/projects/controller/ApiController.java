@@ -6,6 +6,9 @@ import br.com.projects.model.dto.ProjectRequestDto;
 import br.com.projects.model.dto.ProjectResponseDto;
 import br.com.projects.service.EmployeeService;
 import br.com.projects.service.ProjectService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -25,6 +28,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "Employees API", description = "API para gerenciamento de membros")
 public class ApiController {
 
     private final ProjectService projectService;
@@ -37,42 +41,50 @@ public class ApiController {
     }
 
     @PostMapping("/projects")
+    @Hidden
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequest) {
         return ResponseEntity.ok(projectService.createProject(projectRequest));
     }
 
     @PostMapping("/employees")
+    @Operation(summary = "Cria um novo funcionário", description = "Esse endpoint cria um novo funcionário com base nos dados fornecidos.")
     public ResponseEntity<EmployeeResponseDto> createEmployee(@RequestBody EmployeeRequestDto employeeRequest) {
         return ResponseEntity.ok(employeeService.createEmployee(employeeRequest));
     }
 
     @GetMapping("/projects")
+    @Hidden
     public ResponseEntity<List<ProjectResponseDto>> getAllProjects(@PageableDefault(size = 100) Pageable pageable) {
         return ResponseEntity.ok(projectService.findAll(pageable).getContent());
     }
 
     @GetMapping("/employees")
+    @Hidden
     public ResponseEntity<List<EmployeeResponseDto>> getAllEmployees(@PageableDefault(size = 100) Pageable pageable) {
         return ResponseEntity.ok(employeeService.findAll(pageable).getContent());
     }
 
     @GetMapping("/projects/{id}")
+    @Hidden
     public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.findById(id));
     }
 
     @PatchMapping("/projects/{id}/status")
+    @Hidden
     public ResponseEntity<String> updateProjectStatus(@PathVariable Long id, @RequestBody Map<String, String> statusUpdate) {
         projectService.updateStatus(id, statusUpdate.get("status"));
         return ResponseEntity.ok("Status atualizado com sucesso");
     }
 
     @PutMapping("/projects/{id}")
+    @Hidden
     public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto projectRequest) {
         return ResponseEntity.ok(projectService.updateProject(id, projectRequest));
     }
 
     @DeleteMapping("/projects/{id}")
+    @Hidden
     public ResponseEntity<String> deleteProject(@PathVariable Long id) {
         projectService.deleteById(id);
         return ResponseEntity.ok("Projeto removido com sucesso!");
