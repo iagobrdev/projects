@@ -9,7 +9,6 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 public class MvcConfig {
 
-
     @Bean
     public ViewResolver jspViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();

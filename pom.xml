@@ -107,7 +107,7 @@
 			<version>2.1.0</version>
 		</dependency>
 
-		<!-- Dependência para testes Spring Boot -->
+		<!-- Spring Boot Test Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -118,13 +118,6 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<!-- MockMVC -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- Mockito para testes unitários -->
@@ -147,26 +140,21 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.9.1.2184</version>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.2.0</version>
 				<executions>
 					<execution>
-						<id>copy-resources</id>
-						<phase>process-resources</phase>
+						<id>copy-jsp-files</id>
+						<phase>package</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/classes</outputDirectory>
+							<outputDirectory>${project.build.directory}/classes/WEB-INF/jsp</outputDirectory>
 							<resources>
 								<resource>
-									<directory>src/main/webapp</directory>
+									<directory>src/main/webapp/WEB-INF/jsp</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
@@ -174,6 +162,20 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.3.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -185,11 +187,6 @@
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.3.4</version>
 			</plugin>
 		</plugins>
 	</build>
