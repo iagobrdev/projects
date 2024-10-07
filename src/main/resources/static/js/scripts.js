@@ -34,7 +34,7 @@ function allowDrop(event) {
 function handleDrop(event) {
     event.preventDefault();
 
-    if (!draggedCard || !draggedCard.classList.contains('project-card')) {
+    if (!draggedCard?.classList?.contains('project-card')) {
         return;
     }
 

@@ -4,9 +4,14 @@ import br.com.projects.model.dto.EmployeeRequestDto;
 import br.com.projects.model.dto.EmployeeResponseDto;
 import br.com.projects.model.dto.ProjectRequestDto;
 import br.com.projects.model.dto.ProjectResponseDto;
+import br.com.projects.repository.EmployeeRepository;
+import br.com.projects.repository.ProjectEmployeesRepository;
+import br.com.projects.repository.ProjectRepository;
 import br.com.projects.service.EmployeeService;
 import br.com.projects.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,8 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,6 +48,24 @@ class ApiControllerIntegrationTest {
 
     @MockBean
     private ProjectService projectService;
+
+    @MockBean
+    private EntityManagerFactory entityManagerFactory;
+
+    @MockBean
+    private EntityManager entityManager;
+
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    @MockBean
+    private ProjectRepository projectRepository;
+
+    @MockBean
+    private ProjectEmployeesRepository projectEmployeesRepository;
+
+    @MockBean
+    private org.flywaydb.core.Flyway flyway;
 
     @Autowired
     private ObjectMapper objectMapper;

@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -105,7 +104,7 @@ public class ProjectService {
         List<EmployeesToProject> employees = projectEmployeesRepository.findByProjectId(project.getId())
                 .stream()
                 .map(pe -> new EmployeesToProject(pe.getEmployee().getId(), pe.getEmployee().getName(), pe.getEmployee().getAssignment()))
-                .collect(Collectors.toList());
+                .toList();
         responseDto.setEmployees(employees);
         return responseDto;
     }
