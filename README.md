@@ -35,23 +35,3 @@ Para executar a aplicação, você pode usar o comando:
 ```bash
 docker-compose up --build
 ```
-
-Caso o Docker não funcione, baixe o projeto, e configure o banco de dados e as variáveis do application.properties:
-
-```plaintext
-DB_URL=${DB_URL}
-DB_USERNAME=${DB_USERNAME}
-DB_PASSWORD=${DB_PASSWORD}
-```
-
-Em seguida, crie um banco local PostgreSQL com um schema chamado de `public`, que o Flyway irá usar para criar as tabelas. Depois de criado o schema e configurado as variáveis de ambiente, basta rodar o comando:
-
-```bash
-mvn clean install
-```
-
-Para executar o .jar fora da ide, rode o comando (Se for o caso, altere os dados das environments):
-
-```bash
-java -jar target/nome_do_jar.jar --DB_URL=jdbc:postgresql://localhost:5432/projects --DB_USERNAME=postgres --DB_PASSWORD=postgres
-```
